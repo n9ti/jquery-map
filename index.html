@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+  <style type="text/css">
+      html, body { height: 100%; margin: 0; padding: 0; }
+      #map { height: 100%; }
+    </style>
+</head> 
+<body>
+  <h1 id="country">...</h1>
+	<h2 id="isp"></h2>
+	
+	<div id="map"></div>
+  
+  <script type="text/javascript">
+    var lat,lng;
+    $.ajax({
+      url: 'http://www.telize.com/geoip',
+      success: function(data) {
+        $('#country').text(data.country);
+        $('#isp').text(data.isp);
+        lat = data.latitude
+        lng = data.longitude
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: lat, lng: lng},
+          zoom: 18
+        });
+
+        var marker = new google.maps.Marker({
+          position: {lat: lat, lng: lng},
+          map: map,
+          title: 'Hello World!'
+        });
+      }
+    });
+
+    var map;
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: lat, lng: lng},
+        zoom: 8
+      });
+    }
+
+    </script>
+	  <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvpJOF8bD5ULIF_-4e_5PFhpa9fCY4qXU&callback=initMap">
+    </script>
+</body>
+</html>
